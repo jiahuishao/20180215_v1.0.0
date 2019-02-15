@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="CSS/index.css" rel="stylesheet">
+</head>
+<body>
+<div id="test" class="masonry">
+    <button id="addbtn" v-on:click="addImage()">加载新图</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
+<script>
+    var innerWidth = window.innerWidth;
+    var divColNum = 0;
+    var col = "";
+
+    if (innerWidth < 768){
+        divColNum = 2
+    }else if(innerWidth >= 768 && innerWidth < 992){
+        divColNum = 2
+    }else if(innerWidth >= 992 && innerWidth < 1200){
+        divColNum = 5
+    }else if(innerWidth >= 1200){
+        divColNum = 5
+    }
+    for (var k = 0;k < divColNum;k++){
+        col = "<div class=\"column\">\n" +
+            "        <div class=\"item\" v-for=\"a in image" + k + "\"><div class=\"item_iamge\"><img v-bind:src=\"a.src\" width=\"100%\"></div></div>\n" +
+            "    </div>"
+        document.getElementById("test").innerHTML += col;
+    }
+    
+    var imaBox = [
+        {
+            src:'image/timg-ryyl.jpeg',
+            name:'peixiuzhi',
+        },{
+            src:'image/timg-pxz.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz02.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz03.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz04.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz05.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz06.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-dncss.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-ryyl.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz.jpeg',
+            name:'peixiuzhi2'
+        }
+    ];
+
+    var newImaBox = [
+        {
+            src:'image/timg-ryyl.jpeg',
+            name:'peixiuzhi',
+        },{
+            src:'image/timg-pxz.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz02.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz03.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz04.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz05.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz06.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-dncss.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-ryyl.jpeg',
+            name:'peixiuzhi2'
+        },{
+            src:'image/timg-pxz.jpeg',
+            name:'peixiuzhi2'
+        }
+    ];
+
+    var column = document.getElementsByClassName('column').length;
+    var columnNum = imaBox.length/column;
+
+    var origin = {};
+    for (var a = 0;a < imaBox.length/columnNum;a++){
+        var keyName = "image" + a;
+        var inner = imaBox.slice(columnNum*a,columnNum*a+columnNum);
+        origin[keyName] = inner;
+    }
+
+    var img = new Vue({
+        el:'#test',
+        data:origin,
+        methods:{
+            addImage:function () {
+                var imgKeyName = "";
+                for(var i = 0;i < newImaBox.length/columnNum;i++){
+                    imgKeyName = "image" + i;
+                    console.log(imgKeyName);
+                    this.$data[imgKeyName] = this.$data[imgKeyName]
+                        .concat(
+                            newImaBox.slice(
+                                i*newImaBox.length/column,(i+1)*newImaBox.length/column
+                            )
+                        );
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
